@@ -1,77 +1,71 @@
 #include "../includes/ScavTrap.hpp"
 
-ScavTrap::ScavTrap() : name_("noname"), hp_(10), ep_(10), ad_(0)
+ScavTrap::ScavTrap() : ClapTrap("noname", 100, 50, 20)
 {
-	std::cout << "ScavTrap : " << name_ << " : default constructor called\n";
+	std::cout << "ScavTrap : " << this->getName() << " : default constructor called\n";
 }
 
-ScavTrap::ScavTrap(const std::string name) : name_(name), hp_(10), ep_(10), ad_(0)
+ScavTrap::ScavTrap(const std::string name) : ClapTrap(name, 100, 50, 20)
 {
-	std::cout << "ScavTrap : " << name_ << " : constructor called\n";
+	std::cout << "ScavTrap : " << this->getName() << " : constructor called\n";
 }
 
 ScavTrap::ScavTrap(const ScavTrap & other)
 {
-	this->name_ = other.name_;
-	std::cout << "ScavTrap : " << name_ << " : copy constructor called\n";
+	this->setName(other.getName());
+	this->setHp(other.getHp());
+	this->setEp(other.getEp());
+	this->setAd(other.getAd());
+    std::cout << "ScavTrap : " << this->getName() << " : copy constructor called\n";
 }
 
 ScavTrap & ScavTrap::operator=(const ScavTrap & other)
 {
 	if (this != &other)
-		this->name_ = other.name_;
-	std::cout << "ScavTrap :  " << this->name_ << " : copy assignment operator called\n";
+	{
+	   this->setName(other.getName());
+	   this->setHp(other.getHp());
+	   this->setEp(other.getEp());
+	   this->setAd(other.getAd());
+	}
+	std::cout << "ScavTrap :  " << this->getName() << " : copy assignment operator called\n";
 	return *this;
 }
 
 ScavTrap::~ScavTrap() {
-    std::cout << "ScavTrap : " << name_ << " : destructor called\n";
+    std::cout << "ScavTrap : " << this->getName() << " : destructor called\n";
+}
+
+void ScavTrap::guardGate() const
+{
+    std::cout << "ScavTrap: " << this->getName() << " is now in Gate keeper mode\n";
 }
 
 void	ScavTrap::attack(const std::string& target)
 {
-	if (!target.empty() && ep_ > 0 && hp_ > 0)
+	if (!target.empty() && this->getEp() > 0 && this->getHp() > 0)
 	{
-		std::cout << "ScavTrap " << name_ << " attacks " << target << ", causing " << ad_ << " points of damage!" << std::endl;
-		this->ep_ -= 1;
+		std::cout << "ScavTrap " << this->getName() << " attacks " << target << ", causing " << this->getAd() << " points of damage!" << std::endl;
+		this->setEp(this->getEp() - 1);
 	}
 }
 void ScavTrap::takeDamage(unsigned int amount)
 {
-	if (this->hp_ > 0)
+	if (this->getHp() > 0)
 	{
-		std::cout << "ScavTrap " << name_ << " took damage, causing " << amount << " points of damage!" << std::endl;
-		if (static_cast<int>(hp_ - amount) <= 0)
-		  hp_ = 0;
+		if (static_cast<int>(this->getHp() - amount) <= 0)
+		  this->setHp(0);
 		else
-		  hp_ -= amount;
+		  this->setHp(getHp() - amount);
+		std::cout << "ScavTrap " << this->getName() << " took damage, causing " << amount << " points of damage!" << std::endl;
 	}
 }
 void ScavTrap::beRepaired(unsigned int amount)
 {
-	if (hp_ > 0 && ep_ > 0)
+	if (this->getEp() > 0)
 	{
-		hp_ += amount;
-		ep_ -= 1;
+		this->setHp(this->getHp() + amount);
+		this->setEp(this->getEp() - 1);
 	}
-	std::cout << "ScavTrap " << name_ << " regained " << amount << " hit points!" << std::endl;
-}
-
-int ScavTrap::getAd() const
-{
-    return (ad_);
-}
-int ScavTrap::getEp() const
-{
-    return (ep_);
-}
-int ScavTrap::getHp() const
-{
-    return (hp_);
-}
-
-void ScavTrap::setName(const std::string & name)
-{
-    std::cout << "ScavTrap: name '" << name_ << "' set to '" << name << "'\n";
-    name_ = name;
+	std::cout << "ScavTrap " << this->getName() << " regained " << amount << " hit points!" << std::endl;
 }

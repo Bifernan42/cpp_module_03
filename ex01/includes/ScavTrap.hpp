@@ -1,13 +1,9 @@
 #ifndef SCAVTRAP_HPP
 # define SCAVTRAP_HPP
+# include "ClapTrap.hpp"
 
-class ScavTrap
+class ScavTrap : public ClapTrap
 {
-	private:
-		std::string name_;
-		unsigned int hp_;
-		unsigned int ep_;
-		unsigned int ad_;
 	public:
 
 	    ScavTrap();
@@ -15,16 +11,10 @@ class ScavTrap
 		ScavTrap(const ScavTrap &);
 		ScavTrap & operator=(const ScavTrap &);
 		~ScavTrap();
-		void attack(const std::string& target);
-		void takeDamage(unsigned int amount);
-		void beRepaired(unsigned int amount);
-		int   getEp() const;
-		int   getHp() const;
-		int   getAd() const;
-		void  setName(const std::string &);
+		void attack(const std::string&);
+		void takeDamage(unsigned int);
+		void beRepaired(unsigned int);
+		void  guardGate() const;
 };
-
-
-
 
 #endif

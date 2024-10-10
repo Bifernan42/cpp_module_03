@@ -1,19 +1,21 @@
-#include "../includes/ClapTrap.hpp"
+#include "../includes/FragTrap.hpp"
 
 int main(void)
 {
-    ClapTrap trap1("Bob");
-    ClapTrap trap2("Bobby");
+    FragTrap trap1("Tom");
+    FragTrap trap2("Tommy");
 
-    trap2.attack("Bob");
-    trap1.takeDamage(0);
+    trap2.attack("Tom");
+    trap1.takeDamage(20);
+    trap1.highFivesGuys();
+    std::cout << "Tom has now " << trap1.getHp() << " hit points !\n";
 
-    std::cout << "\nLet's try to break bob\n";
+    std::cout << "\nLet's try to break Tom\n";
 
     trap1.takeDamage(1000);
-    std::cout << "Bob has now " << trap1.getHp() << " Hp\n";
+    std::cout << "Tom has now " << trap1.getHp() << " Hp\n";
     for (int i = 0; i < 15 ; ++i)
         trap1.beRepaired(1);
-    std::cout << "Bob has now " << trap1.getHp() << " Hp\n";
+    std::cout << "Tom has now " << trap1.getHp() << " Hp\n";
     return (0);
 }

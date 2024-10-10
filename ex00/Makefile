@@ -1,5 +1,5 @@
-CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -Iincludes
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -Iincludes
 SRCS = srcs/main.cpp srcs/ClapTrap.cpp
 OBJS = $(SRCS:.cpp=.o)
 NAME = prog.exe
@@ -7,10 +7,10 @@ NAME = prog.exe
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	@rm -f $(OBJS)

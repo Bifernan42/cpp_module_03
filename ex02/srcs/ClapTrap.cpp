@@ -40,16 +40,16 @@ void ClapTrap::takeDamage(unsigned int amount)
 {
 	if (this->hp_ > 0)
 	{
-		std::cout << "ClapTrap " << name_ << " took damage, causing " << amount << " points of damage!" << std::endl;
 		if (static_cast<int>(hp_ - amount) <= 0)
 		  hp_ = 0;
 		else
 		  hp_ -= amount;
+		std::cout << "ClapTrap " << name_ << " took damage, causing " << amount << " points of damage!" << std::endl;
 	}
 }
 void ClapTrap::beRepaired(unsigned int amount)
 {
-	if (hp_ > 0 && ep_ > 0)
+	if (ep_ > 0)
 	{
 		hp_ += amount;
 		ep_ -= 1;
@@ -57,21 +57,49 @@ void ClapTrap::beRepaired(unsigned int amount)
 	std::cout << "ClapTrap " << name_ << " regained " << amount << " hit points!" << std::endl;
 }
 
-int ClapTrap::getAd() const
+unsigned int ClapTrap::getAd() const
 {
     return (ad_);
 }
-int ClapTrap::getEp() const
+unsigned int ClapTrap::getEp() const
 {
     return (ep_);
 }
-int ClapTrap::getHp() const
+unsigned int ClapTrap::getHp() const
 {
     return (hp_);
 }
 
-void ClapTrap::setName(const std::string & name)
+void ClapTrap::setName(const std::string name)
 {
     std::cout << "ClapTrap: name '" << name_ << "' set to '" << name << "'\n";
     name_ = name;
+}
+
+ClapTrap::ClapTrap(const std::string name, unsigned int hp, unsigned int ep, unsigned int ad)
+{
+    name_ = name;
+    hp_ = hp;
+    ep_ = ep;
+    ad_ = ad;
+}
+
+std::string ClapTrap::getName() const
+{
+    return (name_);
+}
+
+void ClapTrap::setHp(unsigned int value)
+{
+    hp_ = value;
+}
+
+void ClapTrap::setEp(unsigned int value)
+{
+    ep_ = value;
+}
+
+void ClapTrap::setAd(unsigned int value)
+{
+    ad_= value;
 }

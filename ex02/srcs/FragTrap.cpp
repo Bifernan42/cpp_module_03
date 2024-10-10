@@ -1,77 +1,71 @@
 #include "../includes/FragTrap.hpp"
 
-FragTrap::FragTrap() : name_("noname"), hp_(10), ep_(10), ad_(0)
+FragTrap::FragTrap() : ClapTrap("noname", 100, 50, 20)
 {
-	std::cout << "FragTrap : " << name_ << " : default constructor called\n";
+	std::cout << "FragTrap : " << this->getName() << " : default constructor called\n";
 }
 
-FragTrap::FragTrap(const std::string name) : name_(name), hp_(10), ep_(10), ad_(0)
+FragTrap::FragTrap(const std::string name) : ClapTrap(name, 100, 50, 20)
 {
-	std::cout << "FragTrap : " << name_ << " : constructor called\n";
+	std::cout << "FragTrap : " << this->getName() << " : constructor called\n";
 }
 
 FragTrap::FragTrap(const FragTrap & other)
 {
-	this->name_ = other.name_;
-	std::cout << "FragTrap : " << name_ << " : copy constructor called\n";
+	this->setName(other.getName());
+	this->setHp(other.getHp());
+	this->setEp(other.getEp());
+	this->setAd(other.getAd());
+    std::cout << "FragTrap : " << this->getName() << " : copy constructor called\n";
 }
 
 FragTrap & FragTrap::operator=(const FragTrap & other)
 {
 	if (this != &other)
-		this->name_ = other.name_;
-	std::cout << "FragTrap :  " << this->name_ << " : copy assignment operator called\n";
+	{
+	   this->setName(other.getName());
+	   this->setHp(other.getHp());
+	   this->setEp(other.getEp());
+	   this->setAd(other.getAd());
+	}
+	std::cout << "FragTrap :  " << this->getName() << " : copy assignment operator called\n";
 	return *this;
 }
 
 FragTrap::~FragTrap() {
-    std::cout << "FragTrap : " << name_ << " : destructor called\n";
+    std::cout << "FragTrap : " << this->getName() << " : destructor called\n";
 }
 
 void	FragTrap::attack(const std::string& target)
 {
-	if (!target.empty() && ep_ > 0 && hp_ > 0)
+	if (!target.empty() && this->getEp() > 0 && this->getHp() > 0)
 	{
-		std::cout << "FragTrap " << name_ << " attacks " << target << ", causing " << ad_ << " points of damage!" << std::endl;
-		this->ep_ -= 1;
+		std::cout << "FragTrap " << this->getName() << " attacks " << target << ", causing " << this->getAd() << " points of damage!" << std::endl;
+		this->setEp(this->getEp() - 1);
 	}
 }
 void FragTrap::takeDamage(unsigned int amount)
 {
-	if (this->hp_ > 0)
+	if (this->getHp() > 0)
 	{
-		std::cout << "FragTrap " << name_ << " took damage, causing " << amount << " points of damage!" << std::endl;
-		if (static_cast<int>(hp_ - amount) <= 0)
-		  hp_ = 0;
+		if (static_cast<int>(this->getHp() - amount) <= 0)
+		  this->setHp(0);
 		else
-		  hp_ -= amount;
+		  this->setHp(getHp() - amount);
+		std::cout << "FragTrap " << this->getName() << " took damage, causing " << amount << " points of damage!" << std::endl;
 	}
 }
 void FragTrap::beRepaired(unsigned int amount)
 {
-	if (hp_ > 0 && ep_ > 0)
+	if (this->getEp() > 0)
 	{
-		hp_ += amount;
-		ep_ -= 1;
+		this->setHp(this->getHp() + amount);
+		this->setEp(this->getEp() - 1);
 	}
-	std::cout << "FragTrap " << name_ << " regained " << amount << " hit points!" << std::endl;
+	std::cout << "FragTrap " << this->getName() << " regained " << amount << " hit points!" << std::endl;
 }
 
-int FragTrap::getAd() const
+void FragTrap::highFivesGuys(void)
 {
-    return (ad_);
-}
-int FragTrap::getEp() const
-{
-    return (ep_);
-}
-int FragTrap::getHp() const
-{
-    return (hp_);
-}
-
-void FragTrap::setName(const std::string & name)
-{
-    std::cout << "FragTrap: name '" << name_ << "' set to '" << name << "'\n";
-    name_ = name;
+    std::cout << "FragTrap " << this->getName() << " asks for a high five !\n";
 }
